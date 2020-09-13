@@ -1,14 +1,18 @@
+name: comment on pr
+
 on:
   pull_request:
+    branches:
+      - master
 
 jobs:
-  test:
+  comment_pr:
     runs-on: ubuntu-latest
     steps:
-      - uses: mshick/add-pr-comment@v1
+      - name: comment pr
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}  # this is added for you by default
+        uses: nickatnight/add-pr-comment-action@master
         with:
-          message: |
-            **Thanks for this code contribution!**
-          repo-token: ${{ secrets.GITHUB_TOKEN }}
-          repo-token-user-login: 'github-actions[bot]' # The user.login for temporary GitHub tokens
-          allow-repeats: false # This is the default
+          body: "Thanks for your code!"
+          allow_duplicates: false           # defaults to true
